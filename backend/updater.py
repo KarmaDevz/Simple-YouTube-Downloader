@@ -50,7 +50,7 @@ class Updater:
     def download_and_install_update(self, download_url):
         try:
             # Download to a temporary file
-            print(f"Downloading update from {download_url}...")
+            print(f"Descargando actualización de {download_url}...")
             response = requests.get(download_url, stream=True)
             response.raise_for_status()
 
@@ -63,7 +63,7 @@ class Updater:
                 for chunk in response.iter_content(chunk_size=8192):
                     f.write(chunk)
             
-            print(f"Update downloaded to {temp_path}")
+            print(f"Actualización descargada en {temp_path}")
             
             # Execute the new file
             # In a real installer scenario, this installer would replace the old exe.
@@ -76,5 +76,5 @@ class Updater:
             sys.exit(0)
             
         except Exception as e:
-            print(f"Failed to update: {e}")
+            print(f"Error al actualizar: {e}")
             raise e

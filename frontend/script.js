@@ -38,13 +38,13 @@ document.addEventListener("DOMContentLoaded", async () => {
       checkUpdateBtn.classList.remove("hidden");
     }
   } catch (error) {
-    console.error("Failed to auto-check for updates:", error);
+    console.error("Error al verificar actualizaciones:", error);
   }
 });
 
 checkUpdateBtn.addEventListener("click", () => {
   if (updateUrl) {
-    showModal("Update Available", `New version ${updateVersion} is available.`);
+    showModal("Actualización Disponible", `Nueva versión ${updateVersion} está disponible.`);
     confirmUpdateBtn.classList.remove("hidden");
   }
 });
@@ -56,7 +56,7 @@ closeModalBtn.addEventListener("click", () => {
 confirmUpdateBtn.addEventListener("click", async () => {
   if (updateUrl) {
     confirmUpdateBtn.disabled = true;
-    confirmUpdateBtn.textContent = "Downloading & Installing...";
+    confirmUpdateBtn.textContent = "Descargando e Instalando...";
     
     try {
       const response = await fetch("/api/update", { 
@@ -68,13 +68,13 @@ confirmUpdateBtn.addEventListener("click", async () => {
       const res = await response.json();
       if (!response.ok) throw new Error(res.detail || "Update failed");
       
-      showStatus("Update downloaded. The application will restart...", "success");
+      showStatus("Actualización descargada. El programa se reiniciará...", "success");
       // The backend will exit, so we might want to close or show a final message.
     } catch (error) {
        console.error(error);
-       showStatus("Failed to update: " + error.message, "error");
+       showStatus("Error al actualizar: " + error.message, "error");
        confirmUpdateBtn.disabled = false;
-       confirmUpdateBtn.textContent = "Yes, Update";
+       confirmUpdateBtn.textContent = "Sí, Actualizar";
     }
   }
 });
@@ -98,7 +98,7 @@ async function fetchInfo() {
 
   try {
     const response = await fetch(`/api/info?url=${encodeURIComponent(url)}`);
-    if (!response.ok) throw new Error("Failed to fetch video info");
+    if (!response.ok) throw new Error("Error al obtener información del video");
 
     const data = await response.json();
     currentVideoInfo = data;
@@ -144,7 +144,7 @@ downloadBtn.addEventListener("click", async () => {
   const type = typeSelect.value;
 
   downloadBtn.disabled = true;
-  downloadBtn.textContent = "Downloading...";
+  downloadBtn.textContent = "Descargando...";
   hideStatus();
 
   try {
@@ -160,18 +160,18 @@ downloadBtn.addEventListener("click", async () => {
       }),
     });
 
-    if (!response.ok) throw new Error("Download failed");
+    if (!response.ok) throw new Error("Error al descargar");
 
     const result = await response.json();
-    showStatus("Download Complete! Saved to downloads folder.", "success");
+    showStatus("Descarga completada! Guardado en la carpeta de descargas.", "success");
   } catch (error) {
     showStatus(
-      "Error downloading video. Ensure ffmpeg is installed if converting.",
+      "Error al descargar video. Asegúrate de tener ffmpeg instalado si estás convirtiendo.",
       "error"
     );
   } finally {
     downloadBtn.disabled = false;
-    downloadBtn.textContent = "Download Now";
+    downloadBtn.textContent = "Descargar";
   }
 });
 

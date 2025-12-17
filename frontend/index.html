@@ -19,9 +19,9 @@
         <div class="header-content">
           <div>
             <h1>YT Downloader</h1>
-            <p>Premium Local Video & Audio Downloader</p>
+            <p>Descargador de videos y audios de YouTube</p>
           </div>
-          <button id="checkUpdateBtn" class="secondary-btn hidden">Update</button>
+          <button id="checkUpdateBtn" class="secondary-btn hidden">Actualizar</button>
         </div>
       </header>
 
@@ -30,7 +30,7 @@
           <input
             type="text"
             id="urlInput"
-            placeholder="Paste YouTube Link Here..."
+            placeholder="Pega el enlace de YouTube..."
             autocomplete="off"
           />
           <button id="fetchBtn">
@@ -59,23 +59,23 @@
           <div class="video-card">
             <img id="thumbnail" src="" alt="Video Thumbnail" />
             <div class="video-info">
-              <h2 id="videoTitle">Video Title</h2>
+              <h2 id="videoTitle">Título del video</h2>
               <div class="controls">
                 <div class="select-wrapper">
-                  <label>Type</label>
+                  <label>Tipo</label>
                   <select id="typeSelect">
                     <option value="video">Video (MP4)</option>
                     <option value="audio">Audio (MP3)</option>
                   </select>
                 </div>
                 <div class="select-wrapper">
-                  <label>Quality</label>
+                  <label>Calidad</label>
                   <select id="qualitySelect">
                     <!-- Options populated via JS -->
                   </select>
                 </div>
               </div>
-              <button id="downloadBtn" class="primary-btn">Download Now</button>
+              <button id="downloadBtn" class="primary-btn">Descargar</button>
             </div>
           </div>
         </div>
@@ -87,11 +87,11 @@
     <!-- Update Modal -->
     <div id="updateModal" class="modal hidden">
       <div class="modal-content">
-        <h3 id="modalTitle">Update Available</h3>
-        <p id="modalMessage">A new version is available.</p>
+        <h3 id="modalTitle">Actualización Disponible</h3>
+        <p id="modalMessage">Nueva versión disponible.</p>
         <div class="modal-actions">
-          <button id="closeModalBtn" class="secondary-btn">Close</button>
-          <button id="confirmUpdateBtn" class="primary-btn">Update Now</button>
+          <button id="closeModalBtn" class="secondary-btn">Cerrar</button>
+          <button id="confirmUpdateBtn" class="primary-btn">Actualizar Ahora</button>
         </div>
       </div>
     </div>
