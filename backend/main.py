@@ -7,6 +7,7 @@ import os
 from downloader import Downloader
 import sys
 import os
+from updater import Updater
 
 def resource_path(relative_path):
     if hasattr(sys, '_MEIPASS'):
@@ -17,9 +18,13 @@ def resource_path(relative_path):
 app = FastAPI()
 
 # Setup paths
+FFMPEG_PATH = resource_path(os.path.join("ffmpeg", "ffmpeg.exe"))
 FRONTEND_DIR = resource_path("frontend")
 DOWNLOADS_DIR = resource_path("downloads")
 
+# Version and Updater
+CURRENT_VERSION = "v0.0.1"
+updater = Updater("KarmaDevz", "Simple-YouTube-Downloader")
 
 # Initialize downloader
 downloader = Downloader(download_dir=DOWNLOADS_DIR)
@@ -47,6 +52,10 @@ async def download_video(request: DownloadRequest):
             raise HTTPException(status_code=500, detail="Download failed")
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/check-update")
+async def check_update():
+    return updater.check_for_updates(CURRENT_VERSION)
 
 # Mount static files (Frontend)
 # We mount this LAST so API routes take precedence

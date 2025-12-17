@@ -11,7 +11,60 @@ const statusMessage = document.getElementById("statusMessage");
 
 let currentVideoInfo = null;
 
+const checkUpdateBtn = document.getElementById("checkUpdateBtn");
+
 fetchBtn.addEventListener("click", fetchInfo);
+
+const updateModal = document.getElementById("updateModal");
+const closeModalBtn = document.getElementById("closeModalBtn");
+const confirmUpdateBtn = document.getElementById("confirmUpdateBtn");
+const modalTitle = document.getElementById("modalTitle");
+const modalMessage = document.getElementById("modalMessage");
+
+let updateUrl = "";
+
+
+let updateVersion = "";
+
+// Auto-check on load
+document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    const response = await fetch("/api/check-update");
+    const data = await response.json();
+    
+    if (data.update_available) {
+      updateUrl = data.download_url;
+      updateVersion = data.latest_version;
+      checkUpdateBtn.classList.remove("hidden");
+    }
+  } catch (error) {
+    console.error("Failed to auto-check for updates:", error);
+  }
+});
+
+checkUpdateBtn.addEventListener("click", () => {
+  if (updateUrl) {
+    showModal("Update Available", `New version ${updateVersion} is available.`);
+    confirmUpdateBtn.classList.remove("hidden");
+  }
+});
+
+closeModalBtn.addEventListener("click", () => {
+  updateModal.classList.add("hidden");
+});
+
+confirmUpdateBtn.addEventListener("click", () => {
+  if (updateUrl) {
+    window.open(updateUrl, "_blank");
+    updateModal.classList.add("hidden");
+  }
+});
+
+function showModal(title, message) {
+  modalTitle.textContent = title;
+  modalMessage.textContent = message;
+  updateModal.classList.remove("hidden");
+}
 urlInput.addEventListener("keypress", (e) => {
   if (e.key === "Enter") fetchInfo();
 });
