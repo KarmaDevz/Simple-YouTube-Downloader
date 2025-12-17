@@ -53,10 +53,29 @@ closeModalBtn.addEventListener("click", () => {
   updateModal.classList.add("hidden");
 });
 
-confirmUpdateBtn.addEventListener("click", () => {
+confirmUpdateBtn.addEventListener("click", async () => {
   if (updateUrl) {
-    window.open(updateUrl, "_blank");
-    updateModal.classList.add("hidden");
+    confirmUpdateBtn.disabled = true;
+    confirmUpdateBtn.textContent = "Downloading & Installing...";
+    
+    try {
+      const response = await fetch("/api/update", { 
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ download_url: updateUrl })
+      });
+      
+      const res = await response.json();
+      if (!response.ok) throw new Error(res.detail || "Update failed");
+      
+      showStatus("Update downloaded. The application will restart...", "success");
+      // The backend will exit, so we might want to close or show a final message.
+    } catch (error) {
+       console.error(error);
+       showStatus("Failed to update: " + error.message, "error");
+       confirmUpdateBtn.disabled = false;
+       confirmUpdateBtn.textContent = "Yes, Update";
+    }
   }
 });
 

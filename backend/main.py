@@ -57,6 +57,24 @@ async def download_video(request: DownloadRequest):
 async def check_update():
     return updater.check_for_updates(CURRENT_VERSION)
 
+@app.post("/api/update")
+async def perform_update(request: Request):
+    try:
+        data = await request.json()
+        download_url = data.get("download_url")
+        if not download_url:
+             raise HTTPException(status_code=400, detail="Missing download_url")
+        
+        # This will block until download finishes, then exit.
+        # Ideally we might want to do this in a background task, 
+        # but since we are exiting, blocking is acceptable or we use BackgroundTasks.
+        # However, since we want to report error if it fails before download completes,
+        # keeping it synchronous (or awaited async) until execution is fine for this MVP.
+        updater.download_and_install_update(download_url)
+        return {"status": "success", "message": "Update started"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 # Mount static files (Frontend)
 # We mount this LAST so API routes take precedence
 app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="static")
