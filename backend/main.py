@@ -5,13 +5,21 @@ from pydantic import BaseModel
 import uvicorn
 import os
 from downloader import Downloader
+import sys
+import os
+
+def resource_path(relative_path):
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, relative_path)
+    return os.path.join(os.path.abspath("."), relative_path)
+
 
 app = FastAPI()
 
 # Setup paths
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DOWNLOADS_DIR = os.path.join(BASE_DIR, "../downloads")
-FRONTEND_DIR = os.path.join(BASE_DIR, "../frontend")
+FRONTEND_DIR = resource_path("frontend")
+DOWNLOADS_DIR = resource_path("downloads")
+
 
 # Initialize downloader
 downloader = Downloader(download_dir=DOWNLOADS_DIR)
