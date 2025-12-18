@@ -2,43 +2,36 @@
 ; Compilar con Inno Setup Compiler para generar el wizard instalador
 
 [Setup]
-AppName=GeForce Presence
-AppVersion=2.1.4
+AppName=YouTube Downloader
+AppVersion=0.0.1
 AppPublisher=KarmaDevz
 AppPublisherURL=https://github.com/KarmaDevz
-DefaultDirName={userappdata}\geforce_presence
+DefaultDirName={userappdata}\YouTubeDownloader
 PrivilegesRequired=lowest
-DefaultGroupName=GeForce Presence
+DefaultGroupName=YouTube Downloader
 OutputDir=.
-OutputBaseFilename=GeForcePresenceSetupv2.1.4
+OutputBaseFilename=YouTubeDownloaderSetupv0.0.1
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
-SetupIconFile=_internal\assets\geforce.ico
+SetupIconFile=_internal\frontend\download.ico
 ; activa selector de idioma
 ShowLanguageDialog=yes
 
-[Languages]
-Name: "english"; MessagesFile: "compiler:Default.isl"
-Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
 
 [Files]
-Source: "geforce_presence.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "YouTubeDownloader.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "_internal\*"; DestDir: "{app}\_internal"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; copiar también la carpeta locales con en.json, es.json, etc.
-Source: "_internal\lang\*"; DestDir: "{app}\lang"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
 ; Acceso directo en menú inicio
-Name: "{group}\GeForce Presence"; Filename: "{app}\geforce_presence.exe"; IconFilename: "{app}\_internal\assets\geforce.ico"
+Name: "{group}\YouTube Downloader"; Filename: "{app}\YouTubeDownloader.exe"; IconFilename: "{app}\_internal\frontend\download.ico"
 ; Acceso directo en escritorio
-Name: "{userdesktop}\GeForce Presence"; Filename: "{app}\geforce_presence.exe"; IconFilename: "{app}\_internal\assets\geforce.ico"
+Name: "{userdesktop}\YouTube Downloader"; Filename: "{app}\YouTubeDownloader.exe"; IconFilename: "{app}\_internal\frontend\download.ico"
 ; (Opcional) arranque con Windows
-; Name: "{userstartup}\GeForce Presence"; Filename: "{app}\geforce_presence.exe"; WorkingDir: "{app}"
+; Name: "{userstartup}\YouTube Downloader"; Filename: "{app}\YouTubeDownloader.exe"; WorkingDir: "{app}"
 
-[Registry]
-; Guardar idioma elegido por el usuario en registro
-Root: HKCU; Subkey: "Software\GeForcePresence"; ValueType: string; ValueName: "lang"; ValueData: "{language}"; Flags: uninsdeletevalue
 
 [Run]
-Filename: "{app}\geforce_presence.exe"; Description: "Iniciar GeForce Presence"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\YouTubeDownloader.exe"; Description: "Iniciar YouTube Downloader"; Flags: nowait postinstall skipifsilent
